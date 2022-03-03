@@ -1,4 +1,4 @@
-import {AppActionsType, setAppErrorAC, setAppStatusAC} from '../app/app-reducer';
+import { setAppErrorAC, setAppStatusAC} from '../app/app-reducer';
 import { Dispatch } from 'redux';
 import { ResponseType } from '../api/todolists-api';
 
@@ -17,4 +17,4 @@ export const handleServerNetworkError = (error: {message: string}, dispatch: Err
   dispatch(setAppStatusAC('failed'))
 }
 
-type ErrorUtilsDispatchType = Dispatch<AppActionsType>
+type ErrorUtilsDispatchType = Dispatch<any>
