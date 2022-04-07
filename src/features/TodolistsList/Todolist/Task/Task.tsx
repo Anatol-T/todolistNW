@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback } from 'react'
 import { EditableSpan } from '../../../../components/EditableSpan/EditableSpan'
 import { TaskStatuses, TaskType } from '../../../../api/todolists-api'
-
+import DeleteForeverOutlined from '@mui/icons-material/DeleteForeverOutlined';
 import { Delete } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import Checkbox from '@mui/material/Checkbox';
@@ -36,7 +36,7 @@ export const Task = React.memo((props: TaskPropsType) => {
 
         <EditableSpan value={props.task.title} onChange={onTitleChangeHandler} disabled={props.task.disabled}/>
         <IconButton onClick={onClickHandler} disabled={props.task.disabled}>
-            <Delete/>
+            <DeleteForeverOutlined/>
         </IconButton>
     </div>
 })

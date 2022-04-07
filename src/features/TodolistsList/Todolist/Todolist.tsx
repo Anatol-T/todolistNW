@@ -9,8 +9,9 @@ import { fetchTasksTC } from '../tasks-reducer'
 
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
-import { Delete } from '@mui/icons-material';
+import DeleteForeverOutlined from '@mui/icons-material/DeleteForeverOutlined';
 import {RequestStatusType} from "../../../app/app-reducer";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 type PropsType = {
     id: string
@@ -65,7 +66,7 @@ export const Todolist = React.memo(function (props: PropsType) {
     return <div>
         <h3><EditableSpan value={props.title} onChange={changeTodolistTitle} disabled={props.entityStatus === "loading"}/>
             <IconButton onClick={removeTodolist} disabled={props.entityStatus === "loading"}>
-                <Delete/>
+                <DeleteForeverOutlined color="primary" sx={{fontSize: 35}}/>
             </IconButton>
         </h3>
         <AddItemForm addItem={addTask} disabled={props.entityStatus === "loading"}/>
@@ -79,19 +80,18 @@ export const Todolist = React.memo(function (props: PropsType) {
             }
         </div>
         <div style={{paddingTop: '10px'}}>
-            <Button variant={props.filter === 'all' ? 'outlined' : 'text'}
-                    onClick={onAllClickHandler}
-                    color={'inherit'}
-            >All
-            </Button>
-            <Button variant={props.filter === 'active' ? 'outlined' : 'text'}
-                    onClick={onActiveClickHandler}
-                    color={'primary'}>Active
-            </Button>
-            <Button variant={props.filter === 'completed' ? 'outlined' : 'text'}
-                    onClick={onCompletedClickHandler}
-                    color={'secondary'}>Completed
-            </Button>
+            <ButtonGroup size="small" variant="contained" color={"inherit"}>
+                <Button color={props.filter === 'all' ? "primary" : "inherit"}
+                        onClick={onAllClickHandler}>All
+                </Button>
+                <Button color={props.filter === 'active' ? "primary" : "inherit"}
+                        onClick={onActiveClickHandler}
+                >Active
+                </Button>
+                <Button color={props.filter === 'completed' ? "primary" : "inherit"}
+                        onClick={onCompletedClickHandler}>Completed
+                </Button>
+            </ButtonGroup>
         </div>
     </div>
 })

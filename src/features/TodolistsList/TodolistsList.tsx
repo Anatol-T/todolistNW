@@ -80,15 +80,16 @@ export const TodolistsList: React.FC = () => {
 
     return <>
         <Grid container style={{padding: '20px'}}>
+            <h3>Add new todolist &nbsp;</h3>
             <AddItemForm addItem={addTodolist}/>
         </Grid>
-        <Grid container spacing={3}>
+        <Grid  container spacing={3}>
             {
                 todolists.map(tl => {
                     let allTodolistTasks = tasks[tl.id]
 
                     return <Grid item key={tl.id}>
-                        <Paper style={{padding: '10px'}}>
+                        <Paper elevation={6} style={{padding: '10px'}}>
                             <Todolist
                                 id={tl.id}
                                 title={tl.title}
