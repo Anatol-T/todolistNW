@@ -123,7 +123,7 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
     }
 
     todolistsAPI.updateTask(todolistId, taskId, apiModel)
-      .then(res => {
+      .then(() => {
         const action = updateTaskAC(taskId, domainModel, todolistId)
         dispatch(action)
         dispatch(setDisableStatus(taskId, todolistId, false))

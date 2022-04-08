@@ -11,7 +11,7 @@ import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "./authReducer";
 import {AppRootStateType} from "../../app/store";
-import { useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {AuthPayloadType} from "../../api/todolists-api";
 
 // type FormikErrorType = {
@@ -24,17 +24,19 @@ import {AuthPayloadType} from "../../api/todolists-api";
 export const Login = () => {
   const dispatch = useDispatch()
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  const captchaUrl = useSelector<AppRootStateType, string>(state => state.auth.captchaUrl)
 
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
-      rememberMe: false
+      rememberMe: false,
+      captcha: ''
     },
     validate: (values) => {
-      const errors: Partial<Omit<AuthPayloadType, 'captcha'>> = {};
+      const errors: Partial<AuthPayloadType> = {};
       if (!values.email) {
         errors.email = 'Required';
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -45,6 +47,9 @@ export const Login = () => {
       } else if (values.password.length < 3) {
         errors.password = 'Min length is 3 characters'
       }
+      if (!values.captcha && captchaUrl) {
+        errors.captcha = 'Required';
+      }
       return errors;
     },
     onSubmit: values => {
@@ -54,8 +59,8 @@ export const Login = () => {
   })
 
   if (isLoggedIn) {
-   //return <Navigate to={'/'}/>
-    navigate('/')
+   return <Navigate to={'/'}/>
+    //navigate('/')
   }
 
   return <Grid container justifyContent={'center'}>
@@ -93,6 +98,18 @@ export const Login = () => {
             {formik.touched.password
             && formik.errors.password
             && <div style={{color: "red"}}>{formik.errors.password}</div>}
+            {captchaUrl && <img src={captchaUrl} alt={"captcha"}/>}
+            {captchaUrl && <TextField
+              label="Captcha"
+              margin="normal"
+              name="captcha"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.captcha}
+            />}
+            {formik.touched.captcha
+            && formik.errors.captcha
+            && <div style={{color: "red"}}>{formik.errors.captcha}</div>}
             <FormControlLabel
               label={'Remember me'}
               control={<Checkbox
@@ -115,3 +132,4 @@ export const Login = () => {
     </Grid>
   </Grid>
 }
+//Partial<Omit<AuthPayloadType, 'captcha'>>

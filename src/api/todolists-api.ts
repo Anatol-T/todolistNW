@@ -46,6 +46,11 @@ export const authAPI = {
         return instance.get<ResponseType>(`/auth/me`)
     }
 }
+export const securityAPI = {
+    getCaptcha() {
+        return instance.get<ResponseCaptchaType>(`/security/get-captcha-url`)
+    },
+}
 
 // types
 export type AuthPayloadType = {
@@ -71,7 +76,9 @@ export type ResponseType<D = {}> = {
     fieldsErrors: Array<string>
     data: D
 }
-
+export type ResponseCaptchaType = {
+    url: string
+}
 
 export enum TaskStatuses {
     New = 0,

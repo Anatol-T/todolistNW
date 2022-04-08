@@ -94,11 +94,20 @@ export const addTodolistTC = (title: string) => {
       })
   }
 }
-export const changeTodolistTitleTC = (id: string, title: string) => {
+export const changeTodolistTitleTC = (todolistId: string, title: string) => {
   return (dispatch: Dispatch<ActionsType>) => {
-    todolistsAPI.updateTodolist(id, title)
+    dispatch(setAppStatusAC("loading"))
+    todolistsAPI.updateTodolist(todolistId, title)
       .then((res) => {
-        dispatch(changeTodolistTitleAC(id, title))
+        if (res.data.resultCode === 0) {
+          dispatch(changeTodolistTitleAC(todolistId, title))
+          dispatch(setAppStatusAC("succeeded"))
+        } else {
+          handleServerAppError(res.data, dispatch)
+        }
+      })
+      .catch((err: AxiosError) => {
+        handleServerNetworkError(err, dispatch)
       })
   }
 }
